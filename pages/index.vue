@@ -1,63 +1,55 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">demo-shop</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <products />
+    <el-divider />
+    <cart />
+    <el-divider />
+
+    <el-button v-if="!timer" type="success" @click="initTimer">INIT TIMER</el-button>
+    <el-button v-else type="danger" @click="stopTimer">STOP TIMER</el-button>
   </div>
 </template>
 
 <script>
-export default {}
+const DEFAULT_TIMEOUT = 15 * 1000
+
+export default {
+  data: () => ({
+    timer: null
+  }),
+
+  async fetch({ store }) {
+    await store.dispatch('shop/fetch')
+  },
+
+  beforeDestroy() {
+    this.stopTimer()
+  },
+
+  methods: {
+    initTimer() {
+      this.timer = setTimeout(() => {
+        this.$prompt('Please input usd/rub convertion rate (20 - 80)', 'USD/RUB', {
+          confirmButtonText: 'OK',
+          showClose: false,
+          closeOnPressEscape: false,
+          closeOnClickModal: false,
+          showCancelButton: false,
+          inputValidator: (value) => Math.floor(value) >= 20 && Math.floor(value <= 80),
+          inputErrorMessage: 'Invalid rate'
+        })
+          .then(async ({ value }) => {
+            await Promise.all([this.$store.dispatch('shop/fetch'), this.$store.dispatch('updateUsdToRub', value)])
+            this.initTimer()
+          })
+          .catch(() => {})
+      }, DEFAULT_TIMEOUT)
+    },
+
+    stopTimer() {
+      this.timer && clearTimeout(this.timer)
+      this.timer = null
+    }
+  }
+}
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
