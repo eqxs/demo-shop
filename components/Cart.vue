@@ -41,6 +41,7 @@
 </template>
 
 <script>
+// cart table
 import { mapGetters } from 'vuex'
 
 export default {

@@ -33,6 +33,7 @@ export default {
     [
       'nuxt-vuex-localstorage',
       {
+        // sync cart store
         localStorage: ['cart']
       }
     ]

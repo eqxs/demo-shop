@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+// directive for highlight price change
 Vue.directive('price-changed', {
   componentUpdated(el, { value, oldValue }) {
     if (oldValue === value) return

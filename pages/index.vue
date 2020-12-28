@@ -19,6 +19,7 @@ export default {
   }),
 
   async fetch({ store }) {
+    // initial fetch products
     await store.dispatch('shop/fetch')
   },
 
@@ -42,7 +43,7 @@ export default {
             await Promise.all([this.$store.dispatch('shop/fetch'), this.$store.dispatch('updateUsdToRub', value)])
             this.initTimer()
           })
-          .catch(() => {})
+          .catch(this.stopTimer)
       }, DEFAULT_TIMEOUT)
     },
 

@@ -2,6 +2,7 @@ import NAMES from '~/assets/names.json'
 
 export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS'
 
+// store for products
 export const state = () => ({
   products: []
 })
@@ -17,7 +18,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetch({ state, commit }) {
+  async fetch({ commit }) {
     const response = await this.$axios.$get('data.json')
 
     const products = (response?.Value?.Goods ?? []).map(({ C: price, G: groupId, T: id, P: count }) => {

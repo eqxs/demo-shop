@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+// just for price format
 export function humanizeNumber(value, { digits = 0, noZeroDigits = false } = {}) {
   let number = parseFloat(value)
 

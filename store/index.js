@@ -1,5 +1,6 @@
 export const UPDATE_USD_TO_RUB = 'UPDATE_USD_TO_RUB'
 
+// conversion rate (USD/RUB)
 export const state = () => ({
   usdToRub: 50
 })

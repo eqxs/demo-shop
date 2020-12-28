@@ -25,6 +25,7 @@
 </template>
 
 <script>
+// products table
 export default {
   computed: {
     productsByGroup() {

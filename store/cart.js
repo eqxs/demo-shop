@@ -2,6 +2,7 @@ const ADD_PRODUCT = 'ADD_PRODUCT'
 const UPDATE_QUANTITY = 'UPDATE_COUNT'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
+// store for cart
 export const state = () => ({
   products: [],
   version: '0.0.3'
